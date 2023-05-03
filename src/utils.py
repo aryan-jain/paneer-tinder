@@ -1,8 +1,16 @@
 import json
 import traceback
+from enum import Enum
 from typing import Union
 
 import requests
+
+
+class YelpSortBy(Enum):
+    BEST_MATCH = "best_match"
+    RATING = "rating"
+    REVIEW_COUNT = "review_count"
+    DISTANCE = "distance"
 
 
 def get_rating(cuisine: str) -> int:
@@ -18,7 +26,13 @@ def get_rating(cuisine: str) -> int:
             print("Rating must be an integer.")
 
 
-def get_top_restaurants(zip_code: Union[int, str], cuisine: str, api_key: str, limit=5):
+def get_top_restaurants(
+    zip_code: Union[int, str],
+    cuisine: str,
+    api_key: str,
+    limit=5,
+    sort_by=YelpSortBy.BEST_MATCH,
+):
     """
     Get a list of top 10 highest rated restaurants
     of the provided cuisine near the provided ZIP code
@@ -32,7 +46,7 @@ def get_top_restaurants(zip_code: Union[int, str], cuisine: str, api_key: str, l
     params = {
         "location": str(zip_code),
         "categories": cuisine,
-        "sort_by": "rating",
+        "sort_by": sort_by,
         "open_now": True,
         "limit": limit,
     }

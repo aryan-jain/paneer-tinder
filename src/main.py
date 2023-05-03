@@ -1,9 +1,10 @@
 import argparse
 import os
 import time
+from ast import parse
 
 from db.database import CuisineRatings
-from utils import get_rating, get_top_restaurants
+from utils import YelpSortBy, get_rating, get_top_restaurants
 
 
 def main():
@@ -50,6 +51,15 @@ def main():
                 print(f"\t{restaurant}")
 
 
+def str2yelpsortby(s: str) -> YelpSortBy:
+    try:
+        return YelpSortBy(s)
+    except ValueError:
+        raise argparse.ArgumentTypeError(
+            f"Invalid sort by value: {s}. Must be one of {[x.lower for x in YelpSortBy.__members__.keys()]}."
+        )
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description=f"Rate your current mood to eat a particular cuisine. {list(CuisineRatings().__dict__.keys())}\
@@ -88,6 +98,14 @@ if __name__ == "__main__":
         help="Yelp API key. [Env: YELP_API_KEY]",
         required=False,
         default=os.environ.get("YELP_API_KEY"),
+    )
+    parser.add_argument(
+        "-s",
+        "--sort-by",
+        type=str2yelpsortby,
+        help="Sort Yelp listings by. (best_match/rating/review_count/distance)[Default: best_match]",
+        required=False,
+        default="best_match",
     )
     args = parser.parse_args()
 
