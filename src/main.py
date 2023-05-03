@@ -52,7 +52,8 @@ def main():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description=f"Rate your current mood to eat a particular cuisine. {list(CuisineRatings().__dict__.keys())}"
+        description=f"Rate your current mood to eat a particular cuisine. {list(CuisineRatings().__dict__.keys())}\
+            \nExample: python3 main.py -i vietnamese ramen -p1 Jane -p2 John -z 95048"
     )
     parser.add_argument(
         "-i",
