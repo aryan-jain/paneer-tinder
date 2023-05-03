@@ -28,10 +28,10 @@ class CuisineRatings:
         for attr, value in self.__dict__.items():
             print(f"{attr}: {value}")
 
-    def top_three(self):
-        """View top three cuisine types by score."""
+    def top_three(self) -> list[tuple]:
+        """Return top three cuisine types by score."""
         sorted_ratings = sorted(self.__dict__.items(), key=lambda x: x[1], reverse=True)
-        print(sorted_ratings[:3])
+        return sorted_ratings[:3]
 
     def matches(self, other: CuisineRatings) -> list[tuple]:
         """Return a dictionary of cuisine types that match."""
