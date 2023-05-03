@@ -1,6 +1,5 @@
 import argparse
 import os
-import random
 import time
 
 from db.database import CuisineRatings
@@ -14,28 +13,26 @@ def main():
     print(f"Pass the computer to {args.person1.title()}.")
     for cuisine in p1.__dict__:
         if cuisine not in args.ignore:
-            # p1.add_rating(cuisine, get_rating(cuisine))
-            p1.add_rating(cuisine, random.randint(0, 5))
+            p1.add_rating(cuisine, get_rating(cuisine))
             print("\033[1A" + "\033[K")  # Hide the rating.
 
     print(f"Pass the computer to {args.person2.title()}.")
     for cuisine in p2.__dict__:
         if cuisine not in args.ignore:
-            # p2.add_rating(cuisine, get_rating(cuisine))
-            p1.add_rating(cuisine, random.randint(0, 5))
+            p2.add_rating(cuisine, get_rating(cuisine))
             print("\033[1A" + "\033[K")  # Hide the rating.
 
     print(f"Calculating your matches...")
     time.sleep(1)
 
-    matches = p1.matches(p2)
+    matches: list[tuple[str, int]] = p1.matches(p2)
     if not matches:
         print(
             f"No matches found. Prioritizing {args.person1.title()}'s ratings \
                 because let's be honest, everyone stays happier this way."
         )
         print(f"Top three cuisines for {args.person1.title()}:")
-        matches: list[tuple] = p1.top_three()
+        matches: list[tuple[str, int]] = p1.top_three()
     else:
         print(
             f"Top three cuisines for {args.person1.title()} and {args.person2.title()}:"

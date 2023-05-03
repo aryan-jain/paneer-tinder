@@ -9,7 +9,7 @@ def get_rating(cuisine: str) -> int:
     """Get a rating from the user."""
     while True:
         try:
-            rating = int(input(f"Rate {cuisine} from 0 to 5: "))
+            rating = int(input(f"Rate {cuisine.title()} from 0 to 5: "))
             if 0 <= rating <= 5:
                 return rating
             else:
