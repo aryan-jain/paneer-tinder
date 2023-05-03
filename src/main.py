@@ -1,7 +1,6 @@
 import argparse
 import os
 import time
-from ast import parse
 
 from db.database import CuisineRatings
 from utils import YelpSortBy, get_rating, get_top_restaurants
